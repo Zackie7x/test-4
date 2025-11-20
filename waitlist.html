@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fami – Väntelista</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Gå med på väntelistan för Fami och bli en av Founding Families som är med och formar plattformen från början."
+  />
+  <style>
+    :root {
+      --primary: #166534;
+      --primary-soft: #e3f3e9;
+      --bg: #f5f5f5;
+      --bg-deep: #020617;
+      --text: #020617;
+      --muted: #9ca3af;
+      --border: #1f2933;
+      --radius: 18px;
+      --radius-lg: 26px;
+      --shadow-soft: 0 22px 70px rgba(15, 23, 42, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #020617, #020617 55%, #030712 100%);
+      color: #f9fafb;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      padding: 32px 16px 40px;
+    }
+
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      color: #e5e7eb;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .back-link span {
+      font-size: 1.1rem;
+      transform: translateY(-1px);
+    }
+
+    .back-link:hover {
+      color: #f9fafb;
+    }
+
+    /* Main card */
+    .waitlist-card {
+      background: radial-gradient(circle at top left, #020617, #020617 50%, #030712 100%);
+      border-radius: 32px;
+      box-shadow: var(--shadow-soft);
+      padding: 32px 22px 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 32px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+    }
+
+    .waitlist-left {
+      padding-right: 12px;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #a5b4fc;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .lead {
+      font-size: 0.98rem;
+      color: #e5e7eb;
+      margin-bottom: 18px;
+      max-width: 34rem;
+    }
+
+    .benefits {
+      list-style: none;
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.96rem;
+    }
+
+    .benefits li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .benefit-emoji {
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    .email-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 30rem;
+    }
+
+    /* Right side – form */
+    .waitlist-right {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.94));
+      border-radius: 24px;
+      padding: 22px 20px 20px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .form-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(22, 101, 52, 0.12);
+      color: #bbf7d0;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+
+    .waitlist-right h2 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .form-intro {
+      font-size: 0.85rem;
+      color: #cbd5f5;
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+
+    input,
+    textarea {
+      border-radius: 11px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 9px 11px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background-color: #020617;
+      color: #f9fafb;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #6b7280;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #4ade80;
+      box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.35);
+      background-color: #020617;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .checkbox-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin: 8px 0 14px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    .checkbox-row label {
+      font-size: 0.8rem;
+      color: #cbd5f5;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 11px 18px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.12s ease, background 0.15s ease;
+      box-shadow: 0 14px 32px rgba(22, 163, 74, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(22, 163, 74, 0.55);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 22px rgba(22, 163, 74, 0.4);
+    }
+
+    .form-helper {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+
+    .success-message,
+    .error-message {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+
+    .success-message {
+      background-color: rgba(34, 197, 94, 0.12);
+      color: #bbf7d0;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+
+    .error-message {
+      background-color: rgba(248, 113, 113, 0.12);
+      color: #fecaca;
+      border: 1px solid rgba(248, 113, 113, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      padding: 22px 16px 28px;
+      color: #9ca3af;
+      font-size: 0.8rem;
+      background: #020617;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .waitlist-card {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 26px 18px 22px;
+        gap: 26px;
+      }
+
+      .waitlist-left {
+        padding-right: 0;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 20px 12px 26px;
+      }
+
+      .top-bar {
+        margin-bottom: 16px;
+      }
+
+      .waitlist-card {
+        border-radius: 24px;
+      }
+
+      .waitlist-right {
+        padding: 18px 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <main>
+      <div class="shell">
+        <!-- Top bar -->
+        <div class="top-bar">
+     
+          <a href="index.html" class="back-link">
+            <span>←</span> Tillbaka till startsidan
+          </a>
+        </div>
+
+        <!-- Main waitlist card -->
+        <section class="waitlist-card">
+          <!-- Left: text -->
+          <div class="waitlist-left">
+            <div class="eyebrow">Founding Families</div>
+            <h1>Bli en av Famis Founding Families</h1>
+            <p class="lead">
+              Skriv upp dig om du vill vara med tidigt, testa prototyper och hjälpa till att forma hur Fami fungerar
+              för familjer i diaspora och andra som vill bevara sin historia.
+            </p>
+
+            <ul class="benefits">
+              <li>
+                <span class="benefit-emoji">🌱</span>
+                <span>Du får nyheter först när det finns något att testa – inte varje liten uppdatering.</span>
+              </li>
+              <li>
+                <span class="benefit-emoji">🎧</span>
+                <span>Inbjudningar till digitala samtal om minne, sorg, språk och familjehistoria.</span>
+              </li>
+              <li>
+                <span class="benefit-emoji">🧬</span>
+                <span>Möjlighet att påverka hur släktträd, röster och bilder presenteras i Fami.</span>
+              </li>
+            </ul>
+
+            <p class="email-note">
+              Din mejl används bara för utskick om Fami. Inget spam, inga tredjepartslistor – du kan när som helst
+              avsluta utskicken.
+            </p>
+          </div>
+
+          <!-- Right: form -->
+          <div class="waitlist-right">
+            <div class="form-pill">Väntelista</div>
+            <h2>Skriv upp dig här</h2>
+            <p class="form-intro">
+              Tar mindre än en minut. Du kan när som helst lämna väntelistan genom att svara på mejlet du får.
+            </p>
+
+            <form id="waitlist-form" action="https://formspree.io/f/xldzalqb" method="POST">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Namn</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Skriv ditt namn"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="email">E-postadress</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Skriv din e-postadress"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="country">Land du bor i</label>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    placeholder="Till exempel Sverige, Norge, Storbritannien"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="source">Hur fick du höra talas om Fami?</label>
+                  <input
+                    type="text"
+                    id="source"
+                    name="source"
+                    placeholder="Till exempel vän, sociala medier, event"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="story">Berätta kort om din familj (valfritt)</label>
+                  <textarea
+                    id="story"
+                    name="story"
+                    placeholder="Till exempel: 'Vi är utspridda mellan Mogadishu, London och Stockholm' eller 'Jag önskar att fler av mina mor- och farföräldrars berättelser fanns kvar'."
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="checkbox-row">
+                <input type="checkbox" id="consent" name="consent" required />
+                <label for="consent">
+                  Jag godkänner att min e-postadress sparas för utskick om Fami. Du kan när som helst avsluta
+                  utskicken.
+                </label>
+              </div>
+
+              <button type="submit" class="btn-primary">Gå med på väntelistan</button>
+
+              <div class="form-helper">
+                Genom att skicka formuläret godkänner du att vi behandlar dina uppgifter enligt informationen till
+                vänster.
+              </div>
+
+              <div id="success-message" class="success-message">
+                Tack! Du är nu med på väntelistan. Jag hör av mig när det finns nyheter eller möjlighet att testa
+                Fami.
+              </div>
+              <div id="error-message" class="error-message">
+                Något gick fel när formuläret skulle skickas. Testa gärna igen om en liten stund.
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          Fami är just nu i utvecklingsfas. Jag bygger det här steg för steg och delar resan öppet.
+          <br />
+          Kontakt: <a href="mailto:joinfami@gmail.com">joinfami@gmail.com</a>
+        </div>
+        <div>© Fami Archive</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById("waitlist-form");
+    const successMessage = document.getElementById("success-message");
+    const errorMessage = document.getElementById("error-message");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      successMessage.style.display = "none";
+      errorMessage.style.display = "none";
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (response.ok) {
+          successMessage.style.display = "block";
+          form.reset();
+        } else {
+          errorMessage.style.display = "block";
+        }
+      } catch (err) {
+        errorMessage.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
